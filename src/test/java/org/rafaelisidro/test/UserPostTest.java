@@ -1,12 +1,11 @@
 package org.rafaelisidro.test;
 
-import jdk.jfr.Description;
 import org.apache.http.HttpStatus;
 import org.rafaelisidro.client.UserClient;
+import org.rafaelisidro.data.constants.UserMessages;
 import org.rafaelisidro.data.factory.UserFactory;
 import org.rafaelisidro.models.request.PostUserRequestModel;
 import org.rafaelisidro.models.response.PostUserResponseModel;
-import org.rafaelisidro.utils.messages.UserMessages;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
