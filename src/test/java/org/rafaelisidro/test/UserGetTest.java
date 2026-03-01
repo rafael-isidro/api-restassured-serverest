@@ -2,8 +2,12 @@ package org.rafaelisidro.test;
 
 import org.apache.http.HttpStatus;
 import org.rafaelisidro.client.UserClient;
+import org.rafaelisidro.data.factory.UserFactory;
+import org.rafaelisidro.models.request.PostUserRequestModel;
 import org.rafaelisidro.models.response.GetAllUsersResponseModel;
+import org.rafaelisidro.models.response.GetUserResponseModel;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -11,6 +15,13 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class UserGetTest {
 
     private static final UserClient userClient = new UserClient();
+    private PostUserRequestModel existentUser;
+
+    @BeforeTest
+    public void beforeTest(){
+        existentUser = UserFactory.validCommomUser();
+        userClient.registerUser(existentUser);
+    }
 
     @Test
     public void testValidarContratoGetUser() {
@@ -40,5 +51,17 @@ public class UserGetTest {
         Assert.assertNotNull(response.getUsuarios().get(0).getEmail());
         Assert.assertNotNull(response.getUsuarios().get(0).getPassword());
         Assert.assertNotNull(response.getUsuarios().get(0).getAdministrador());
+    }
+
+    @Test
+    public void testValidarlistagemDeUsuarioPorNome() {
+
+        GetAllUsersResponseModel response = userClient.getUserByName(existentUser.getNome())
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .response().as(GetAllUsersResponseModel.class);
+
+        Assert.assertEquals(response.getUsuarios().get(0).getNome(),  existentUser.getNome());
     }
 }

@@ -27,4 +27,13 @@ public class UserClient extends BaseClient {
                 .when()
                         .get(USER);
     }
+
+    public Response getUserByName(String name) {
+        return
+                given()
+                        .spec(super.set())
+                        .queryParam("nome", name)
+                .when()
+                        .get(USER);
+    }
 }
