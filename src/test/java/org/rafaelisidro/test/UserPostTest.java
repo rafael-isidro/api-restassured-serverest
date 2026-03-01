@@ -9,9 +9,20 @@ import org.rafaelisidro.models.response.PostUserResponseModel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class UserPostTest {
 
     private static final UserClient userClient = new UserClient();
+
+    @Test
+    public void testValidarContratoPostUser() {
+        PostUserRequestModel validUser = UserFactory.validCommomUser();
+
+        userClient.registerUser(validUser)
+                .then()
+                    .body(matchesJsonSchemaInClasspath("schemas/post-user-schema.json"));
+    }
 
     @Test
     public void testValidarCadastroComSucesso() {
