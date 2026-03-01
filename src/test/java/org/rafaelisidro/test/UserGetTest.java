@@ -5,7 +5,6 @@ import org.rafaelisidro.client.UserClient;
 import org.rafaelisidro.data.factory.UserFactory;
 import org.rafaelisidro.models.request.PostUserRequestModel;
 import org.rafaelisidro.models.response.GetAllUsersResponseModel;
-import org.rafaelisidro.models.response.GetUserResponseModel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -14,7 +13,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class UserGetTest {
 
-    private static final UserClient userClient = new UserClient();
+    private final UserClient userClient = new UserClient();
     private PostUserRequestModel existentUser;
 
     @BeforeTest

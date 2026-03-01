@@ -14,7 +14,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class UserPostTest {
 
-    private static final UserClient userClient = new UserClient();
+    private final UserClient userClient = new UserClient();
 
     @Test
     public void testValidarContratoPostUser() {
