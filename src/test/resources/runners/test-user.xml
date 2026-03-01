@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Serverest API - RestAssured">
+
+    <test name="Testes de Usuário">
+        <classes>
+            <class name="org.rafaelisidro.test.UserGetTest"/>
+            <class name="org.rafaelisidro.test.UserPostTest"/>
+        </classes>
+    </test>
+</suite>
