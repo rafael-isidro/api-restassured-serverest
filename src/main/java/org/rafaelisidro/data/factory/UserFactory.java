@@ -24,4 +24,22 @@ public class UserFactory {
                 "false"
         );
     }
+
+    public static PostUserRequestModel blankFieldsUser() {
+        return new PostUserRequestModel(
+                "",
+                "",
+                "",
+                ""
+        );
+    }
+
+    public static PostUserRequestModel invalidEmailUser() {
+        return new PostUserRequestModel(
+                faker.name().firstName(),
+                faker.name().lastName() + "@testecom",
+                faker.credentials().username(),
+                "false"
+        );
+    }
 }
