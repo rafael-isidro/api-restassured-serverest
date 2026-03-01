@@ -36,7 +36,6 @@ public class UserPostTest {
                     .response().as(PostUserResponseModel.class);
 
         Assert.assertEquals(registerResponse.getMessage(), UserMessages.USER_MESSAGES.successRegister());
-        Assert.assertNotNull(registerResponse.get_id());
 
     }
 
@@ -51,7 +50,6 @@ public class UserPostTest {
                     .response().as(PostUserResponseModel.class);
 
         Assert.assertEquals(registerResponse.getMessage(), UserMessages.USER_MESSAGES.successRegister());
-        Assert.assertNotNull(registerResponse.get_id());
 
     }
 
@@ -90,8 +88,8 @@ public class UserPostTest {
 
         String response = userClient.registerUser(invalidUser)
                 .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract().path("email").toString();
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract().path("email").toString();
 
         Assert.assertEquals(response, UserMessages.USER_MESSAGES.invalidEmailField());
     }

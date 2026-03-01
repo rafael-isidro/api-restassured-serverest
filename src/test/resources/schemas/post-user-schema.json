@@ -1,5 +1,5 @@
 {
-  "title": "Generated schema for Root",
+  "title": "Post User Schema",
   "type": "object",
   "properties": {
     "message": {
