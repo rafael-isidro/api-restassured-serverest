@@ -1,5 +1,7 @@
 package org.rafaelisidro.utils;
 
+import org.rafaelisidro.exceptions.LoadPropException;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -14,7 +16,7 @@ public class Manipulation {
         try (FileInputStream file = new FileInputStream("src/main/resources/application-test.properties")){
             props.load(file);
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new LoadPropException("Error loading test properties file", e);
         }
 
         return props;
