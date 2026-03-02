@@ -4,6 +4,9 @@ Suíte de testes automatizados para validação da funcionalidade de **Cadastro 
 
 ---
 
+## Documento - Estratégia e Cenários BDD (Testes WEB e API):
+https://docs.google.com/document/d/1kIhzwVqWpsVe6nAWmb3MmuIyx9Ve910WFOy-YHC-SiI/edit?usp=sharing
+
 ## 📋 Sumário
 
 - [Introdução](#introdução)
