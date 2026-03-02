@@ -141,8 +141,8 @@ mvn test -DsuiteXmlFile=src/test/resources/runners/test-user.xml
 ### Descrição dos Pastas Principais
 
 - **client/** - Classes responsáveis pela comunicação com a API (BaseClient, UserClient)
-- **data/** - Dados de teste, factories e constantes
-- **models/** - Modelos de requisição e resposta (POJO/DTO)
+- **data/** - Dados de teste, factory e constants
+- **models/** - Modelos de requisição e resposta
 - **test/** - Classes de testes automatizados
 - **schemas/** - Arquivos JSON Schema para validação de respostas
 - **runners/** - Arquivos de configuração de suites de testes (TestNG)
@@ -153,26 +153,21 @@ mvn test -DsuiteXmlFile=src/test/resources/runners/test-user.xml
 
 ### 1. **REST Assured como Framework de Testes de API**
 
-**Por que REST Assured?**
-
 - Framework nativo para testes de API REST em Java
 - Sintaxe fluente e intuitiva
 - Suporte a asserções simples e complexas
 - Fácil validação de JSON e schemas
-- Excelente integração com JUnit/TestNG
+- Excelente integração com TestNG/JUnit
 - Ampla comunidade e documentação
-
-**Alternativa considerada:** Selenium WebDriver (inadequado para API)
 
 ---
 
-### 2. **Page Object Model adaptado para Client Pattern**
+### 2. **Client Pattern**
 
-- **BaseClient:** Classe abstrata com métodos comuns (GET, POST, PUT, DELETE)
-- **UserClient:** Implementação específica com endpoints de usuários
-- **Centralização:** Todas as requisições em um único lugar
+- **BaseClient:** Classe abstrata com configuração padrão para request da API
+- **Centralização:** Todas as requisições e endpoints centralizados
 - **Manutenibilidade:** Mudança na API = alteração em um único cliente
-- **Legibilidade:** Testes concentram-se na lógica, não em detalhes técnicos
+- **Legibilidade:** Testes concentram-se na lógica/validação
 - **Reutilização:** Métodos compartilhados entre múltiplos testes
 
 **Implementação:**
@@ -202,11 +197,9 @@ src/main/java/org/rafaelisidro/data/factory/
 
 ### 4. **Model Objects para Request e Response**
 
-- **POJO (Plain Old Java Objects):** Representação de estruturas JSON em Java
-- Desserialização automática de respostas
-- Type-safety na manipulação de dados
-- Fácil validação de campos
-- Suporta anotações de serialização (Jackson/Gson)
+- Reutilização em diferentes testes
+- Suíte de Testes mais escalável
+- Facilidade de manutenção nos atributos do modelo
 
 **Implementação:**
 ```
@@ -223,8 +216,8 @@ src/main/java/org/rafaelisidro/models/
 
 ### 5. **JSON Schema Validation**
 
-- Valida estrutura de respostas contra schemas predefinidos
-- Evita testes frágeis que validam apenas alguns campos
+- Valida estrutura de responses com schemas predefinidos
+- Evita testes frágeis que ignoram campos
 - Automatiza detecção de mudanças na estrutura API
 - Schemas reutilizáveis entre testes
 
@@ -252,105 +245,33 @@ response
 
 ---
 
-### 7. **Maven como Gerenciador de Dependências e Build**
-
-- Gerenciamento automático de bibliotecas
-- Fácil configuração de plugins (Surefire, Failsafe)
-- Suporte a profiles (dev, test, prod)
-- Integração com CI/CD pipelines
-
----
-
-## Regras de Negócio
-
-### RN01 - O sistema não deve permitir o cadastro de usuários com nome já existente na base de dados.
-
-**Validação:** CT03 - Tentar cadastrar usuário com nome já cadastrado
-
----
-
-### RN02 - E-mail válido e único: O sistema deve validar se o e-mail informado possui formato válido (ex.: usuario@email.com) e não deve permitir cadastro com email já existente na base de dados.
-
-**Validações:**
-- CT04 - Tentar cadastrar usuário com email já cadastrado
-- CT05 - Tentar cadastrar usuário com email inválido
-
----
-
 ## Cenários de Teste
 
 ### **Cenários Positivos (Fluxo Principal)**
 
 | ID | Descrição | Método HTTP |
 |---|---|---|
-| CT01 | Cadastrar usuário comum com dados válidos | POST /usuarios |
-| CT02 | Cadastrar usuário administrador com dados válidos | POST /usuarios |
-
-### **Validação de Regras de Negócio**
-
-| ID | Descrição | Regra de Negócio | HTTP |
-|---|---|---|---|
-| CT03 | Tentar cadastrar com nome já existente | RN01 | POST /usuarios |
-| CT04 | Tentar cadastrar com email já existente | RN02 | POST /usuarios |
-| CT05 | Tentar cadastrar com email inválido | RN02 | POST /usuarios |
+| CT01	| Cadastrar usuário comum com dados válidos	| POST /usuarios
+| CT02	| Cadastrar usuário administrador com dados válidos	| POST /usuarios
+| CT03	| Listar todos os usuários com sucesso	| GET /usuarios
+| CT04	| Listar usuário filtrando por nome existente | GET /usuarios?nome=
 
 ### **Validação de Campos**
 
-| ID | Descrição | HTTP |
+| ID | Descrição | Método HTTP |
 |---|---|---|
-| CT06 | Tentar cadastrar com Nome em branco | POST /usuarios |
-| CT07 | Tentar cadastrar com Nome inválido (caracteres especiais) | POST /usuarios |
-| CT08 | Tentar cadastrar com Email em branco | POST /usuarios |
-| CT09 | Tentar cadastrar com Senha em branco | POST /usuarios |
-| CT10 | Tentar cadastrar com Todos os campos em branco | POST /usuarios |
-
-### **Validação de Limites de Caracteres**
-
-| ID | Descrição | HTTP |
-|---|---|---|
-| CT11 | Tentar cadastrar com Nome com menos de 3 caracteres | POST /usuarios |
-| CT12 | Tentar cadastrar com Nome com mais de 120 caracteres | POST /usuarios |
-| CT13 | Tentar cadastrar com Senha com mais de 100 caracteres | POST /usuarios |
+| CT05	| Tentar cadastrar usuário com email já existente |	POST /usuarios |
+| CT06	| Tentar cadastrar usuário com email inválido |	POST /usuarios |
+| CT07	| Tentar cadastrar usuário com todos os campos em branco | POST /usuarios
 
 ### **Validação de Schema e Response**
 
-| ID | Descrição | HTTP |
+| ID | Descrição | Método HTTP |
 |---|---|---|
-| CT14 | Validar schema de resposta POST | POST /usuarios |
-| CT15 | Validar schema de resposta GET (um usuário) | GET /usuarios/{id} |
-| CT16 | Validar schema de resposta GET (todos usuários) | GET /usuarios |
+| CT08	| Validar schema da resposta POST | POST /usuarios
+| CT09	| Validar schema da resposta GET (todos usuários) | GET /usuarios
 
-**Total de testes:** 16 cenários automatizados
-
----
-
-## Geração de Relatórios
-
-### Executar e Visualizar Relatório
-
-Após executar os testes, um relatório é gerado automaticamente:
-
-```bash
-mvn clean test
-```
-
-**Localização:** `target/surefire-reports/`
-
-### Conteúdo do Relatório (Surefire/Extent Reports)
-
-- ✅ Testes que passaram
-- ❌ Testes que falharam
-- ⏱️ Tempo de execução de cada teste
-- 📊 Estatísticas de execução
-- 📝 Logs detalhados de requisições e respostas
-- 🔴 Stack trace de erros
-
-### Visualizar Relatório HTML (se configurado com Extent Reports)
-
-```bash
-# Abre automaticamente no navegador após execução
-target/extent-reports/index.html
-```
+**Total de testes:** 09 cenários automatizados
 
 ---
 
@@ -360,23 +281,20 @@ target/extent-reports/index.html
 - Cada teste é independente
 - Não utiliza dados de testes anteriores
 - Podem ser executados em qualquer ordem
-- Cleanup automático de dados após teste
 
 ### Massa de Dados Dinâmica
 - Factory para geração com variações
-- IDs e emails únicos por execução
 - Suporta cenários com dados específicos
-- Fácil parametrização para diferentes casos
+- Evita inserção de dados "chumbados" nos testes
 
 ### Código Limpo e Legível
 - Nomes descritivos de métodos
 - Métodos pequenos e focados
-- Documentação clara em JavaDoc
 - Separação clara de responsabilidades
 
 ### Manutenibilidade
-- Seletores/endpoints centralizados (Client)
-- Constantes em arquivo dedicado
+- Endpoints e Configurações centralizadas (Clients)
+- Constantes em arquivo separado
 - Factory para geração de dados
 - Models reutilizáveis entre testes
 
@@ -384,77 +302,12 @@ target/extent-reports/index.html
 - Estrutura permite adicionar novos endpoints facilmente
 - Novos testes reutilizam clients e factories
 - BaseClient extensível com novos métodos
-- Schemas reutilizáveis
 
 ### Validação Robusta
 - Validação de status code
 - Validação de schema JSON
 - Validação de campos específicos
 - Mensagens de erro com contexto
-
----
-
-## Configuração de Propriedades
-
-### arquivo: `src/main/resources/application-test.properties`
-
-```properties
-# Configuração da API
-server.url=https://serverest.dev
-server.port=
-
-# Timeout (em milissegundos)
-request.timeout=5000
-
-# Headers padrões
-request.content-type=application/json
-request.accept=application/json
-```
-
-**Uso no código:**
-```java
-String baseUrl = System.getProperty("server.url");
-```
-
----
-
-## Estrutura de um Teste
-
-### Exemplo: Cadastro de usuário
-
-```java
-@Test
-public void testRegisterUserSuccess() {
-    // Arrange - Preparar dados
-    PostUserRequestModel user = UserFactory.createValidUser();
-    
-    // Act - Executar ação
-    PostUserResponseModel response = userClient.registerUser(user);
-    
-    // Assert - Validar resultado
-    assertThat(response.getStatusCode()).isEqualTo(201);
-    assertThat(response.getMessage()).contains("Cadastro realizado com sucesso");
-    assertThat(response.getId()).isNotNull();
-}
-```
-
----
-
-## Troubleshooting
-
-### Erro: "Dependências não encontradas"
-```bash
-mvn clean install -U
-```
-
-### Erro: "Testes não encontrados"
-Verifique que a classe de teste termina com `Test` ou `Tests`
-
-### Erro: "Propriedades não carregadas"
-Verifique se `application-test.properties` existe em `src/main/resources/`
-
-### Erro: "Schema validation failed"
-Verifique se o arquivo de schema JSON está em `src/test/resources/schemas/`
 
 ---
 
@@ -473,27 +326,3 @@ Documentação adicional reunindo bugs encontrados durante a automação:
 
 📅 **Data:** 01 de Março de 2026  
 🔗 **GitHub:** [rafael-isidro](https://github.com/rafael-isidro/)
-
----
-
-## Licença
-
-Este projeto está disponível sob a licença MIT.
-
----
-
-## Contribuindo
-
-Para contribuir com melhorias:
-
-1. Faça um Fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/melhoria`)
-3. Commit suas mudanças (`git commit -m 'Adiciona melhoria'`)
-4. Push para a branch (`git push origin feature/melhoria`)
-5. Abra um Pull Request
-
----
-
-## Suporte
-
-Para dúvidas ou reporte de problemas, abra uma **issue** neste repositório ou entre em contato direto.
