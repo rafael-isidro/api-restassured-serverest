@@ -51,8 +51,8 @@ A API está retornando o campo `password` exposto na Response.
 
 ---
 
-### BUG-008: Campo administrador Cadastrado e Retornado como String ao invés de Boolean
-**Severidade:** 🟠 **MÉDIA**  
+### MLH-008: Campo administrador Cadastrado e Retornado como String ao invés de Boolean
+**Severidade:** 🟠 **BAIXA**  
 **Status:** ABERTO  
 **Data de Abertura:** 01/03/2026  
 **Testes Afetados:** CT01, CT02, CT03, CT04
@@ -90,12 +90,12 @@ O campo `administrador` está sendo cadastrado e retornado como **String** (`"tr
 
 ---
 
-## Resumo de Bugs
+## Resumo de Bugs e Melhorias
 
 | ID | Título | Severidade | Status | Testes Afetados |
 |---|---|---|---|---|
-| **BUG-007** | **Exposição de Senha em Resposta da API** | 🔴 **CRÍTICA** | ABERTO | CT03, CT04 |
-| **BUG-008** | **Campo administrador como String ao invés de Boolean** | 🟠 **MÉDIA** | ABERTO | CT01, CT02, CT03, CT04 |
+| **BUG-007** | **Exposição de Senha em Resposta da API** | 🔴 **CRÍTICA** | ABERTO | CT10 |
+| **MLH-008** | **Campo administrador como String ao invés de Boolean** | 🟠 **BAIXA** | ABERTO | CT01, CT02, CT03, CT04 |
 
 ---
 
@@ -110,7 +110,7 @@ O campo `administrador` está sendo cadastrado e retornado como **String** (`"tr
 ### 🟠 MÉDIA (1)
 | Bug | Descrição | Impacto |
 |-----|-----------|--------|
-| **BUG-008** | Campo administrador como String ao invés de Boolean | Inconsistência de tipagem, erros em consumidores da API |
+| **MLH-008** | Campo administrador como String ao invés de Boolean | Inconsistência de tipagem, erros em consumidores da API |
 
 ---
 
