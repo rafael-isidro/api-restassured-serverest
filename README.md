@@ -30,7 +30,7 @@ Este projeto implementa uma **suíte abrangente de testes automatizados de API**
 - 🔍 **Validação de Campos** - Campos obrigatórios, dados inválidos e cadastro em duplicidade
 - 🚨 **Validação de Erros e Status Codes** - Respostas de erro, mensagens de validação e Status Codes apropriados
 
-**Total de Cenários:** 09 testes automatizados (CT01-CT09)
+**Total de Cenários:** 10 testes automatizados (CT01-CT10)
 
 ---
 
@@ -270,8 +270,9 @@ response
 |---|---|---|
 | CT08	| Validar schema da resposta POST | POST /usuarios
 | CT09	| Validar schema da resposta GET (todos usuários) | GET /usuarios
+| CT10	| Validar que usuários listados não possuem campo password | GET /usuarios
 
-**Total de testes:** 09 cenários automatizados
+**Total de testes:** 10 cenários automatizados
 
 ---
 

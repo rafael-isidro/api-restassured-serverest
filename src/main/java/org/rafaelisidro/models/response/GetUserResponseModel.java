@@ -11,7 +11,6 @@ public class GetUserResponseModel {
 
     private String nome;
     private String email;
-    private String password;
     private String administrador;
     private String _id;
 
